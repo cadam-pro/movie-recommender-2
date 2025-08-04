@@ -1,0 +1,14 @@
+fastapi
+# google-cloud-storage
+uvicorn
+# numpy
+pandas
+# scikit-learn
+requests
+# umap-learn
+# plotly
+# kaggle
+dotenv
+ruff
+pre-commit
+pytest
