@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    container_name: backend
+    ports:
+      - "8000:8000"  # adapter selon ton API
+    # volumes:
+    #   - ./data:/app/data
+    # environment:
+    #   - GCS_BUCKET_NAME=movie-recommender-batch-062
+    #   - GOOGLE_APPLICATION_CREDENTIALS=keys/data-engineering-461712-13e050dd1ec1.json
+
+  frontend:
+    build:
+      context: .
+      dockerfile: app/Dockerfile
+    container_name: frontend
+    ports:
+      - "8501:8501"
+    # volumes:
+    #   - ./data:/app/data
+    environment:
+      - API_BASE_URL=http://backend:8000
+    depends_on:
+      - backend
+
+  project:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: project
+    volumes:
+      - .:/project
+    working_dir: /project
+    tty: true
+    stdin_open: true
+    entrypoint: /bin/bash
