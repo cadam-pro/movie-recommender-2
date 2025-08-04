@@ -9,6 +9,3 @@ requests
 # plotly
 # kaggle
 dotenv
-ruff
-pre-commit
-pytest
