@@ -40,4 +40,3 @@ services:
     working_dir: /project
     tty: true
     stdin_open: true
-    # entrypoint: /bin/bash
