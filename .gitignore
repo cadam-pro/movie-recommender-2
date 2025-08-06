@@ -205,3 +205,11 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Keys
+keys/*
+!/keys/.gitkeep
+
+# Data
+data/*
+!/data/.gitkeep

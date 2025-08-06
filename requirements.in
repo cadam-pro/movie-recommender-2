@@ -3,3 +3,5 @@ pytest
 pandas
 requests
 dotenv
+notebook
+kaggle
