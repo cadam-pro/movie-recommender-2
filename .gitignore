@@ -214,4 +214,5 @@ keys/*
 data/*
 !/data/.gitkeep
 
-movie-recommender_V2.ipynb
+# "help folder, containing files that are not useful for the code but may help with theoretical progress.
+help
