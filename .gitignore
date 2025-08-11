@@ -213,3 +213,6 @@ keys/*
 # Data
 data/*
 !/data/.gitkeep
+
+# "help" folder, containing files that are not useful for the code but may help with theoretical progress
+help
