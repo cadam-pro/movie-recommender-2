@@ -6,4 +6,4 @@ dotenv
 notebook
 kaggle
 scikit-learn
-spacy
+scipy

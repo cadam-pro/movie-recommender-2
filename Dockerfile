@@ -9,7 +9,6 @@ RUN chmod 600 /root/.kaggle/kaggle.json
 
 COPY requirements.in .
 RUN pip install --no-cache-dir -r requirements.in
-RUN python -m spacy download en_core_web_sm
 
 COPY . .
 
