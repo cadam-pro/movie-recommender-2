@@ -5,3 +5,6 @@ requests
 dotenv
 notebook
 kaggle
+scikit-learn
+umap-learn
+numpy
