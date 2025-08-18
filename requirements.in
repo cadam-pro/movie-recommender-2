@@ -7,3 +7,5 @@ notebook
 kaggle
 scikit-learn
 scipy
+tensorflow_hub
+numpy
