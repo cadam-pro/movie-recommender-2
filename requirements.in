@@ -6,6 +6,5 @@ dotenv
 notebook
 kaggle
 scikit-learn
-scipy
-tensorflow_hub
+umap-learn
 numpy
