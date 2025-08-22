@@ -1,16 +1,5 @@
 import pandas as pd
-import tempfile
-import os
-from data import read_csv, sort_df, convert_types, clean_data
-
-
-def test_read_csv():
-    df = pd.DataFrame({"a": [1, 2]})
-    path = tempfile.mktemp(suffix=".csv")
-    df.to_csv(path, index=False)
-    out = read_csv(path)
-    assert out.equals(df)
-    os.remove(path)
+from data import sort_df, convert_types, clean_data
 
 
 def test_sort_df():

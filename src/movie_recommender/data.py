@@ -1,10 +1,7 @@
 import pandas as pd
-
-
-def read_csv(filepath: str) -> pd.DataFrame:
-    """Read a CSV file and return its contents."""
-
-    return pd.read_csv(filepath)
+from params import full_path_all, full_path_clean
+from registry import save_csv
+from utils import read_csv
 
 
 def sort_df(df: pd.DataFrame) -> pd.DataFrame:
@@ -85,3 +82,14 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     return df[
         ~df["genres_array"].apply(lambda x: len(x) == 1 and x[0] == "Documentary")
     ]
+
+
+if __name__ == "__main__":
+    df = read_csv(full_path_all)
+    df_sorted = sort_df(df)
+    print(df_sorted.head())
+    df_converted = convert_types(df_sorted)
+    print(df_converted.dtypes)
+    df_cleaned = clean_data(df_converted)
+    print(df_cleaned.shape)
+    save_csv(df_cleaned, full_path_clean)

@@ -20,7 +20,6 @@ def test_get_kaggle_csv(monkeypatch):
 
 def test_save_csv(monkeypatch, tmp_path):
     path = tmp_path / "out.csv"
-    monkeypatch.setattr("registry.full_path_clean", str(path))
     monkeypatch.setattr("registry.delete_if_file_exists", lambda _: None)
     monkeypatch.setattr(builtins, "print", lambda _: None)
 

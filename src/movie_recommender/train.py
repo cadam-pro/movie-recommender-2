@@ -2,6 +2,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import umap.umap_ as umap
 import numpy as np
 import pandas as pd
+from params import full_path_clean, full_path_trained
+from data import read_csv
+from registry import save_csv
 
 
 def train_model(df: pd.DataFrame) -> pd.DataFrame:
@@ -59,3 +62,11 @@ def find_closest_movies(df, movie_id, top_n=10):
             "distance",
         ]
     ]
+
+
+if __name__ == "__main__":
+    df_cleaned = read_csv(full_path_clean)
+    model = train_model(df_cleaned)
+    save_csv(model, full_path_trained)
+    recommendations = find_closest_movies(model, 424)
+    print(recommendations)

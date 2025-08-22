@@ -10,8 +10,10 @@ tests :
 	echo $(PYTHONPATH) ;\
 	pytest tests/
 
-main :
-	@echo "Running main.py..."
-	export PYTHONPATH=src/movie_recommender  ;\
-	echo $(PYTHONPATH) ;\
-	python main.py
+mr_data :
+	@echo "Running src/movie_recommender/data.py..."
+	python src/movie_recommender/data.py
+
+mr_train :
+	@echo "Running src/movie_recommender/train.py..."
+	python src/movie_recommender/train.py

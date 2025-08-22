@@ -1,6 +1,16 @@
 import os
 import tempfile
-from utils import delete_if_file_exists
+import pandas as pd
+from utils import delete_if_file_exists, read_csv
+
+
+def test_read_csv():
+    df = pd.DataFrame({"a": [1, 2]})
+    path = tempfile.mktemp(suffix=".csv")
+    df.to_csv(path, index=False)
+    out = read_csv(path)
+    assert out.equals(df)
+    os.remove(path)
 
 
 def test_delete_existing_file():
