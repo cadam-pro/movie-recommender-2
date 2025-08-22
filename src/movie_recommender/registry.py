@@ -1,5 +1,5 @@
 from kaggle.api.kaggle_api_extended import KaggleApi
-from params import DEST_FILE, full_path_all, full_path_clean
+from params import DEST_FILE, full_path_all
 from utils import delete_if_file_exists
 import pandas as pd
 
@@ -15,11 +15,11 @@ def get_kaggle_csv() -> None:
     print("Dataset downloaded and extracted.")
 
 
-def save_cleaned_csv(df: pd.DataFrame) -> None:
+def save_csv(df: pd.DataFrame, path: str) -> None:
     """Save the cleaned CSV file to the data directory."""
-    delete_if_file_exists(full_path_clean)
-    df.to_csv(full_path_clean, index=False)
-    print(f"Cleaned data saved to {full_path_clean}.")
+    delete_if_file_exists(path)
+    df.to_csv(path, index=False)
+    print(f"Cleaned data saved to {path}.")
 
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 import builtins
-from registry import get_kaggle_csv, save_cleaned_csv
+from registry import get_kaggle_csv, save_csv
 import pandas as pd
 
 
@@ -18,14 +18,14 @@ def test_get_kaggle_csv(monkeypatch):
     get_kaggle_csv()  # doit s'exécuter sans erreur
 
 
-def test_save_cleaned_csv(monkeypatch, tmp_path):
+def test_save_csv(monkeypatch, tmp_path):
     path = tmp_path / "out.csv"
     monkeypatch.setattr("registry.full_path_clean", str(path))
     monkeypatch.setattr("registry.delete_if_file_exists", lambda _: None)
     monkeypatch.setattr(builtins, "print", lambda _: None)
 
     df = pd.DataFrame({"a": [1, 2]})
-    save_cleaned_csv(df)
+    save_csv(df, str(path))
 
     out = pd.read_csv(path)
     assert out.equals(df)
