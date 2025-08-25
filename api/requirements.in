@@ -1,11 +1,11 @@
 fastapi
 # google-cloud-storage
 uvicorn
-# numpy
+numpy
 pandas
-# scikit-learn
+scikit-learn
 requests
-# umap-learn
-# plotly
-# kaggle
+umap-learn
 dotenv
+kaggle
+mlflow
