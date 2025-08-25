@@ -98,5 +98,6 @@ if __name__ == "__main__":
         recommendations = find_closest_movies(model_df, movie_id)
         print(recommendations)
         mlflow.log_text(
-            recommendations.to_csv(index=False), f"recommendations_for_movie_{movie_id}.csv"
+            recommendations.to_csv(index=False),
+            f"recommendations_for_movie_{movie_id}.csv",
         )
