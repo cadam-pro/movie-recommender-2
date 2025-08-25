@@ -94,5 +94,9 @@ if __name__ == "__main__":
         save_csv(model_df, full_path_trained)
         mlflow.log_artifact(full_path_trained)
 
-        recommendations = find_closest_movies(model_df, 424)
+        movie_id = 424  # Exemple avec le film "Schindler's List"
+        recommendations = find_closest_movies(model_df, movie_id)
         print(recommendations)
+        mlflow.log_text(
+            recommendations.to_csv(index=False), f"recommendations_for_movie_{movie_id}.csv"
+        )
