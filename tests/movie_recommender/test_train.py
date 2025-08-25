@@ -10,11 +10,13 @@ def test_train_model(monkeypatch):
         def fit_transform(self, X):
             return np.array([[0, 0], [1, 1], [2, 2]])
 
+    # Mock UMAP pour éviter l'exécution réelle
     monkeypatch.setattr("train.umap.UMAP", lambda *a, **k: DummyUMAP())
 
-    out = train_model(df)
-    assert "x" in out.columns and "y" in out.columns
-    assert len(out) == 3
+    out_df, reducer = train_model(df)
+    assert "x" in out_df.columns and "y" in out_df.columns
+    assert len(out_df) == 3
+    assert reducer is not None
 
 
 def test_find_closest_movies():
