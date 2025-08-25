@@ -8,3 +8,4 @@ kaggle
 scikit-learn
 umap-learn
 numpy
+mlflow

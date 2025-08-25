@@ -1,3 +1,5 @@
+import mlflow
+import mlflow.sklearn
 from sklearn.feature_extraction.text import TfidfVectorizer
 import umap.umap_ as umap
 import numpy as np
@@ -7,7 +9,9 @@ from data import read_csv
 from registry import save_csv
 
 
-def train_model(df: pd.DataFrame) -> pd.DataFrame:
+def train_model(
+    df: pd.DataFrame, n_neighbors=15, min_dist=0.1, n_components=2
+) -> pd.DataFrame:
     """Train a UMAP model on the movie plot summaries."""
     # Vectorisation TF-IDF sur les résumés
     vectorizer = TfidfVectorizer(max_features=1000, stop_words="english")
@@ -15,9 +19,9 @@ def train_model(df: pd.DataFrame) -> pd.DataFrame:
 
     # Réduction dimensionnelle avec UMAP
     reducer = umap.UMAP(
-        n_neighbors=15,
-        min_dist=0.1,
-        n_components=2,
+        n_neighbors=n_neighbors,
+        min_dist=min_dist,
+        n_components=n_components,
         metric="cosine",
         init="spectral",
         random_state=42,
@@ -26,8 +30,9 @@ def train_model(df: pd.DataFrame) -> pd.DataFrame:
 
     df["x"] = embedding[:, 0]
     df["y"] = embedding[:, 1]
+
     print("Model trained and embeddings added to DataFrame.")
-    return df
+    return df, reducer
 
 
 def find_closest_movies(df, movie_id, top_n=10):
@@ -66,7 +71,28 @@ def find_closest_movies(df, movie_id, top_n=10):
 
 if __name__ == "__main__":
     df_cleaned = read_csv(full_path_clean)
-    model = train_model(df_cleaned)
-    save_csv(model, full_path_trained)
-    recommendations = find_closest_movies(model, 424)
-    print(recommendations)
+
+    # Démarrer une expérience MLflow
+    mlflow.set_experiment("movie_recommendation_umap")
+    with mlflow.start_run():
+        # Log des hyperparamètres
+        n_neighbors = 15
+        min_dist = 0.1
+        n_components = 2
+        mlflow.log_param("n_neighbors", n_neighbors)
+        mlflow.log_param("min_dist", min_dist)
+        mlflow.log_param("n_components", n_components)
+
+        # Entraînement du modèle
+        model_df, umap_model = train_model(
+            df_cleaned, n_neighbors, min_dist, n_components
+        )
+
+        # Enregistrer le modèle UMAP
+        mlflow.sklearn.log_model(umap_model, name="umap_model")
+
+        save_csv(model_df, full_path_trained)
+        mlflow.log_artifact(full_path_trained)
+
+        recommendations = find_closest_movies(model_df, 424)
+        print(recommendations)
