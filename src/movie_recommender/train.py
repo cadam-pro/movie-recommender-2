@@ -9,19 +9,17 @@ from data import read_csv
 from registry import save_csv
 
 
-def train_model(
-    df: pd.DataFrame, n_neighbors=15, min_dist=0.1, n_components=2
-) -> pd.DataFrame:
+def train_model(df: pd.DataFrame, n_neighbors=15, max_features=1000) -> pd.DataFrame:
     """Train a UMAP model on the movie plot summaries."""
     # Vectorisation TF-IDF sur les résumés
-    vectorizer = TfidfVectorizer(max_features=1000, stop_words="english")
+    vectorizer = TfidfVectorizer(max_features=max_features, stop_words="english")
     X_tfidf = vectorizer.fit_transform(df["overview"])
 
     # Réduction dimensionnelle avec UMAP
     reducer = umap.UMAP(
         n_neighbors=n_neighbors,
-        min_dist=min_dist,
-        n_components=n_components,
+        min_dist=0.1,
+        n_components=2,
         metric="cosine",
         init="spectral",
         random_state=42,
@@ -77,22 +75,17 @@ if __name__ == "__main__":
     with mlflow.start_run():
         # Log des hyperparamètres
         n_neighbors = 15
-        min_dist = 0.1
-        n_components = 2
+        max_features = 1000
         mlflow.log_param("n_neighbors", n_neighbors)
-        mlflow.log_param("min_dist", min_dist)
-        mlflow.log_param("n_components", n_components)
+        mlflow.log_param("max_features", max_features)
 
         # Entraînement du modèle
-        model_df, umap_model = train_model(
-            df_cleaned, n_neighbors, min_dist, n_components
-        )
+        model_df, umap_model = train_model(df_cleaned, n_neighbors, max_features)
 
         # Enregistrer le modèle UMAP
         mlflow.sklearn.log_model(umap_model, name="umap_model")
 
         save_csv(model_df, full_path_trained)
-        mlflow.log_artifact(full_path_trained)
 
         movie_id = 424  # Exemple avec le film "Schindler's List"
         recommendations = find_closest_movies(model_df, movie_id)
