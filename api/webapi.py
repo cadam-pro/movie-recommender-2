@@ -23,7 +23,7 @@ def get_recommendations(movie_id: int):
     Endpoint to get movie recommendations based on a given movie ID.
     """
     df = read_csv(full_path_trained)
-    recommendations = find_closest_movies(df, movie_id)
+    recommendations = find_closest_movies(df, movie_id, 5)
     return (
         recommendations.to_dict(orient="records")
         if recommendations is not None
