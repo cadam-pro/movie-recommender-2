@@ -1,0 +1,25 @@
+FROM apache/airflow:latest
+
+# Définir le répertoire de travail
+WORKDIR /airflow
+
+# Copier les requirements spécifiques à Airflow
+COPY requirements.airflow.in .
+RUN pip install --no-cache-dir -r requirements.airflow.in
+
+# Copier le code (DAGs, scripts, etc.)
+COPY . .
+
+# Exposer le port web d’Airflow
+EXPOSE 8080
+
+# Définir les variables d’environnement recommandées
+ENV AIRFLOW_HOME=/airflow
+ENV AIRFLOW__CORE__LOAD_EXAMPLES=False
+ENV AIRFLOW__CORE__EXECUTOR=LocalExecutor
+ENV AIRFLOW_UID=50000
+ENV _AIRFLOW_WWW_USER_USERNAME=admin
+ENV _AIRFLOW_WWW_USER_PASSWORD=admin
+
+# Démarrer Airflow en standalone (webserver + scheduler dans 1 process)
+CMD ["airflow", "standalone"]
