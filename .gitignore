@@ -219,3 +219,8 @@ mlruns/*
 
 # "help" folder, containing files that are not useful for the code but may help with theoretical progress
 help
+
+# Airflow
+airflow.*
+simple_auth_manager_passwords.json.generated
+logs/
