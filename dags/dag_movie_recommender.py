@@ -1,7 +1,13 @@
+from datetime import datetime
 from airflow import DAG
 from airflow.decorators import task
 
-with DAG(dag_id="daily_movie_recommender", schedule=None) as dag:
+with DAG(
+    dag_id="daily_movie_recommender",
+    schedule="0 8 * * 1-5",
+    start_date=datetime(2025, 1, 1),
+    catchup=False,
+) as dag:
 
     @task
     def get_csv():
