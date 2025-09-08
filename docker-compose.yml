@@ -41,18 +41,18 @@ services:
     tty: true
     stdin_open: true
 
-  mlflow:
-    build:
-      context: .
-      dockerfile: Dockerfile.mlflow
-    container_name: mlflow
-    ports:
-      - "5000:5000"
-    volumes:
-      - .:/mlruns
-    working_dir: /mlruns
-    tty: true
-    stdin_open: true
+  # mlflow:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.mlflow
+  #   container_name: mlflow
+  #   ports:
+  #     - "5000:5000"
+  #   volumes:
+  #     - .:/mlruns
+  #   working_dir: /mlruns
+  #   tty: true
+  #   stdin_open: true
 
   airflow:
     build:
@@ -62,4 +62,4 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./dags:/airflow/dags
+      - .:/airflow
