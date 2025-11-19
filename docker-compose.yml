@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    container_name: backend
+    ports:
+      - "8000:8000"  # adapter selon ton API
+    volumes:
+      - .:/backend
+    # environment:
+    #   - GCS_BUCKET_NAME=movie-recommender-batch-062
+    #   - GOOGLE_APPLICATION_CREDENTIALS=keys/data-engineering-461712-13e050dd1ec1.json
+
+  frontend:
+    build:
+      context: .
+      dockerfile: app/Dockerfile
+    container_name: frontend
+    ports:
+      - "8501:8501"
+    volumes:
+      - .:/frontend
+    environment:
+      - API_BASE_URL=http://backend:8000
+    depends_on:
+      - backend
+
+  project:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: project
+    ports:
+      - "8888:8888"
+    volumes:
+      - .:/project
+    working_dir: /project
+    tty: true
+    stdin_open: true
+
+  # mlflow:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.mlflow
+  #   container_name: mlflow
+  #   ports:
+  #     - "5000:5000"
+  #   volumes:
+  #     - .:/mlruns
+  #   working_dir: /mlruns
+  #   tty: true
+  #   stdin_open: true
+
+  airflow:
+    build:
+      context: .
+      dockerfile: Dockerfile.airflow
+    container_name: airflow
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/airflow

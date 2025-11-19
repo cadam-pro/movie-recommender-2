@@ -1,0 +1,12 @@
+ruff
+pytest
+pandas
+requests
+dotenv
+notebook
+kaggle
+scikit-learn
+umap-learn
+numpy
+mlflow
+apache-airflow

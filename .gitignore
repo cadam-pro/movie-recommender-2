@@ -205,3 +205,22 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Keys
+keys/*
+!/keys/.gitkeep
+
+# Data
+data/*
+!/data/.gitkeep
+
+# MLFlow
+mlruns/*
+
+# "help" folder, containing files that are not useful for the code but may help with theoretical progress
+help
+
+# Airflow
+airflow.*
+simple_auth_manager_passwords.json.generated
+logs/

@@ -1,0 +1,11 @@
+fastapi
+# google-cloud-storage
+uvicorn
+numpy
+pandas
+scikit-learn
+requests
+umap-learn
+dotenv
+kaggle
+mlflow
